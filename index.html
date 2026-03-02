@@ -815,8 +815,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
     selectedRole = role;
   }
 
-  // ── WAITLIST SUBMIT WITH EMAILJS ──
-  function submitWaitlist() {
+ // ── WAITLIST SUBMIT WITH EMAILJS ──
+function submitWaitlist() {
   const email = document.getElementById('wlEmail').value.trim();
   const name  = document.getElementById('wlName').value.trim();
   const city  = document.getElementById('wlCity').value.trim();
@@ -832,37 +832,36 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
     setTimeout(() => document.querySelectorAll('.wl-role').forEach(r => r.style.borderColor = ''), 2000);
     return;
   }
-    // Send via EmailJS (replace with your actual Service ID and Template ID)
-    emailjs.send('service_v2blzqr', 'template_a99vd6m', templateParams)
-      .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        // Show success and store locally
-        document.getElementById('wlForm').style.display = 'none';
-        document.getElementById('wlSuccess').style.display = 'block';
-        count++;
-        const el = document.getElementById('wlCount');
-        if(el) el.textContent = count;
-        localStorage.setItem('ahp_waitlist', JSON.stringify({ email, name, city, role: selectedRole, ts: new Date().toISOString() }));
-      }, function(error) {
-        console.log('FAILED...', error);
-        alert('Something went wrong. Please try again or contact us.');
-      });
-  }
-  // ── COPY LINK ──
-  function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      alert('Link copied! Share it with a friend.');
-    });
-  }
 
-  // ── SMOOTH SCROLL FOR NAV ──
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  // DEFINE templateParams HERE - MATCHING YOUR EMAILJS TEMPLATE
+  const templateParams = {
+    user_name: name,
+    user_city: city,
+    user_email: email,
+    role: selectedRole,
+    submission_time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST'
+  };
+
+  // Send via EmailJS
+  emailjs.send('service_v2blzqr', 'template_a99vd6m', templateParams)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      // Show success message
+      document.getElementById('wlForm').style.display = 'none';
+      document.getElementById('wlSuccess').style.display = 'block';
+      count++;
+      const el = document.getElementById('wlCount');
+      if(el) el.textContent = count;
+      
+      // OPTIONAL: Comment out or remove this line to prevent blocking
+      // localStorage.setItem('ahp_waitlist', JSON.stringify({ email, name, city, role: selectedRole, ts: new Date().toISOString() }));
+    }, function(error) {
+      console.log('FAILED...', error);
+      alert('Something went wrong. Please try again or contact us.');
     });
-  });
-  // ── RESET FORM FOR MULTIPLE SUBMISSIONS ──
+}
+
+// ── RESET FORM FOR MULTIPLE SUBMISSIONS (NEW FUNCTION) ──
 function resetForm() {
   // Hide success message
   document.getElementById('wlSuccess').style.display = 'none';
@@ -878,7 +877,25 @@ function resetForm() {
   // Remove selected role
   document.querySelectorAll('.wl-role').forEach(r => r.classList.remove('selected'));
   selectedRole = '';
+  
+  // Optional: Clear any stored data
+  // localStorage.removeItem('ahp_waitlist');
 }
+
+// ── COPY LINK ──
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('Link copied! Share it with a friend.');
+  });
+}
+
+// ── SMOOTH SCROLL FOR NAV ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
 </script>
 </body>
 </html>
