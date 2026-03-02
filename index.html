@@ -850,13 +850,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
   }
 
   // ── CHECK IF ALREADY SIGNED UP ──
-  window.addEventListener('load', () => {
-    const stored = localStorage.getItem('ahp_waitlist');
-    if(stored) {
-      document.getElementById('wlForm').style.display = 'none';
-      document.getElementById('wlSuccess').style.display = 'block';
-    }
-  });
+
 
   // ── COPY LINK ──
   function copyLink() {
