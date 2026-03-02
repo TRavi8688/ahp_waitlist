@@ -834,10 +834,10 @@ function submitWaitlist() {
   }
 
   // DEFINE templateParams HERE - MATCHING YOUR EMAILJS TEMPLATE
-  const templateParams = {
-    user_name: name,
-    user_city: city,
-    user_email: email,
+    const templateParams = {
+    name: name,           // Try this instead of user_name
+    city: city,           // Try this instead of user_city
+    email: email,         // Try this instead of user_email
     role: selectedRole,
     submission_time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST'
   };
