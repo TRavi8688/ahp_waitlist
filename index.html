@@ -848,10 +848,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
         alert('Something went wrong. Please try again or contact us.');
       });
   }
-
-  // ── CHECK IF ALREADY SIGNED UP ──
-
-
   // ── COPY LINK ──
   function copyLink() {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -866,6 +862,23 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
+  // ── RESET FORM FOR MULTIPLE SUBMISSIONS ──
+function resetForm() {
+  // Hide success message
+  document.getElementById('wlSuccess').style.display = 'none';
+  
+  // Show form
+  document.getElementById('wlForm').style.display = 'flex';
+  
+  // Clear form fields
+  document.getElementById('wlName').value = '';
+  document.getElementById('wlCity').value = '';
+  document.getElementById('wlEmail').value = '';
+  
+  // Remove selected role
+  document.querySelectorAll('.wl-role').forEach(r => r.classList.remove('selected'));
+  selectedRole = '';
+}
 </script>
 </body>
 </html>
