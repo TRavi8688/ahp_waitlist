@@ -817,31 +817,21 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
   // ── WAITLIST SUBMIT WITH EMAILJS ──
   function submitWaitlist() {
-    const email = document.getElementById('wlEmail').value.trim();
-    const name  = document.getElementById('wlName').value.trim();
-    const city  = document.getElementById('wlCity').value.trim();
+  const email = document.getElementById('wlEmail').value.trim();
+  const name  = document.getElementById('wlName').value.trim();
+  const city  = document.getElementById('wlCity').value.trim();
 
-    if(!email || !email.includes('@')) {
-      document.getElementById('wlEmail').style.borderColor = 'var(--red)';
-      document.getElementById('wlEmail').focus();
-      setTimeout(() => document.getElementById('wlEmail').style.borderColor = '', 2000);
-      return;
-    }
-    if(!selectedRole) {
-      document.querySelectorAll('.wl-role').forEach(r => r.style.borderColor = 'var(--amber)');
-      setTimeout(() => document.querySelectorAll('.wl-role').forEach(r => r.style.borderColor = ''), 2000);
-      return;
-    }
-
-    // Prepare template parameters (must match your EmailJS template variables)
-    const templateParams = {
-  from_name: name,
-  from_city: city,
-  reply_to: email,
-  user_role: selectedRole,
-  submission_time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST'
-};
-
+  if(!email || !email.includes('@')) {
+    document.getElementById('wlEmail').style.borderColor = 'var(--red)';
+    document.getElementById('wlEmail').focus();
+    setTimeout(() => document.getElementById('wlEmail').style.borderColor = '', 2000);
+    return;
+  }
+  if(!selectedRole) {
+    document.querySelectorAll('.wl-role').forEach(r => r.style.borderColor = 'var(--amber)');
+    setTimeout(() => document.querySelectorAll('.wl-role').forEach(r => r.style.borderColor = ''), 2000);
+    return;
+  }
     // Send via EmailJS (replace with your actual Service ID and Template ID)
     emailjs.send('service_v2blzqr', 'template_a99vd6m', templateParams)
       .then(function(response) {
